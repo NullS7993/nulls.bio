@@ -3,13 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NullS7993 | Portfolio</title>
-    
+    <title>NullS7993 | Bio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
         :root { --neon-cyan: #00d2ff; }
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+
+        /* TELA DE ENTRADA */
+        #entry-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); 
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: 0.8s;
+        }
+        .entry-text {
+            font-family: 'Segoe UI', sans-serif; color: white;
+            font-size: 1.2rem; letter-spacing: 3px;
+            text-transform: lowercase; opacity: 0.7;
+            animation: pulse 2s infinite ease-in-out;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); } }
+
+        /* BLUR INICIAL */
+        .content-blur { filter: blur(20px); pointer-events: none; }
+        #main-wrapper { 
+            transition: filter 1s ease; 
+            height: 100vh; width: 100%; 
+            display: flex; justify-content: center; align-items: center; 
+        }
 
         body {
             background: radial-gradient(circle at center, #0a192f 0%, #050505 100%);
@@ -23,20 +45,16 @@
         .card {
             background: rgba(10, 25, 47, 0.5); backdrop-filter: blur(15px);
             padding: 22px; border-radius: 20px; border: 1.5px solid var(--neon-cyan);
-            width: 290px; height: 280px; 
+            width: 290px; height: 280px;  
             display: flex; flex-direction: column;
         }
 
         .floating { animation: float 5s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        /* Distribuição do primeiro card */
         .content-middle {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center; 
-            margin-bottom: 20px;
+            flex-grow: 1; display: flex; flex-direction: column;
+            justify-content: center; margin-bottom: 20px;
         }
 
         .profile-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
@@ -49,10 +67,8 @@
         .nav-icon { font-size: 1.4rem; text-decoration: none; transition: 0.3s; opacity: 0.8; display: flex; align-items: center; }
         .nav-icon:hover { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 5px currentColor); }
 
-        /* Correção Roblox */
         .roblox-icon svg { margin-top: 2px; }
 
-        /* Player */
         .player-inner { display: flex; flex-direction: column; height: 100%; gap: 12px; }
         .track-info-row { display: flex; align-items: center; gap: 10px; }
         .track-art { width: 45px; height: 45px; border-radius: 8px; border: 1px solid var(--neon-cyan); }
@@ -66,7 +82,6 @@
         .banner-container { flex-grow: 1; border-radius: 10px; overflow: hidden; border: 1px solid rgba(0, 210, 255, 0.2); }
         .banner-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
 
-        /* CORREÇÃO VOLUME */
         .global-volume-wrapper { 
             position: fixed; top: 25px; left: 25px; 
             background: rgba(10, 25, 47, 0.7); padding: 10px; 
@@ -81,7 +96,6 @@
         #volume-slider { width: 80px; accent-color: var(--neon-cyan); opacity: 0; transition: 0.3s; margin-left: 10px; }
         .global-volume-wrapper:hover #volume-slider { opacity: 1; }
 
-        /* Notificação e Cursor */
         .alert-box { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #020a14; border: 1.5px solid var(--neon-cyan); padding: 10px 22px; border-radius: 12px; display: flex; align-items: center; gap: 10px; opacity: 0; transition: 0.4s; z-index: 100; }
         .alert-box.show { opacity: 1; bottom: 100px; }
         .check-circle { width: 18px; height: 18px; border: 1.5px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; }
@@ -92,77 +106,96 @@
 </head>
 <body>
 
-<div class="global-volume-wrapper">
-  <div class="vol-group">
-    <i class="fas fa-volume-up"></i>
-    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
-  </div>
+<div id="entry-overlay" onclick="startSite()">
+    <span class="entry-text">click me...</span>
 </div>
 
-<div class="main-screen">
-  <div class="card floating">
-    <div class="profile-header">
-      <img src="https://i.pinimg.com/736x/29/9c/d0/299cd01ef3cc5c96c3887df343cde455.jpg" class="pfp">
-      <div class="info">
-        <h1 class="username">NullS7993</h1>
-        <p class="sub-label">DEV & STUDENT <span class="code-tag">&lt;/&gt;</span></p>
-      </div>
+<div id="main-wrapper" class="content-blur">
+    <div class="global-volume-wrapper">
+        <div class="vol-group">
+            <i class="fas fa-volume-up"></i>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+        </div>
     </div>
 
-    <div class="content-middle">
-       <h2 class="section-title">REDES SOCIAIS</h2>
-       <div class="social-grid">
-          <a href="javascript:void(0)" class="nav-icon" id="discordBtn" style="color: #7289da;"><i class="fab fa-discord"></i></a>
-          <a href="https://br.pinterest.com/nulls7993/" target="_blank" class="nav-icon" style="color: #e60023;"><i class="fab fa-pinterest"></i></a>
-          <a href="https://www.instagram.com/x86dll/" target="_blank" class="nav-icon" style="color: #e4405f;"><i class="fab fa-instagram"></i></a>
-          <a href="https://open.spotify.com/user/31754egwe3k2mccsvpxbq7pgjnby" target="_blank" class="nav-icon" style="color: #1DB954;"><i class="fab fa-spotify"></i></a>
-          <a href="https://www.roblox.com/pt/users/789564/profile" target="_blank" class="nav-icon roblox-icon" style="color: #ffffff;">
-            <svg viewBox="0 0 448 512" width="20"><path fill="currentColor" d="M98.8 0L0 412.3 349.2 512 448 99.7 98.8 0zM261 324.4l-113.8-32.4L179.6 178l113.8 32.4-32.4 114z"/></svg>
-          </a>
-       </div>
+    <div class="main-screen">
+        <div class="card floating">
+            <div class="profile-header">
+                <img src="https://i.pinimg.com/736x/29/9c/d0/299cd01ef3cc5c96c3887df343cde455.jpg" class="pfp">
+                <div class="info">
+                    <h1 class="username">NullS7993</h1>
+                    <p class="sub-label">DEV & STUDENT <span class="code-tag"></></span></p>
+                </div>
+            </div>
+
+            <div class="content-middle">
+                <h2 class="section-title">REDES SOCIAIS</h2>
+                <div class="social-grid">
+                    <a href="javascript:void(0)" class="nav-icon" id="discordBtn" style="color: #7289da;"><i class="fab fa-discord"></i></a>
+                    <a href="https://br.pinterest.com/nulls7993/" target="_blank" class="nav-icon" style="color: #e60023;"><i class="fab fa-pinterest"></i></a>
+                    <a href="https://www.instagram.com/x86dll/" target="_blank" class="nav-icon" style="color: #e4405f;"><i class="fab fa-instagram"></i></a>
+                    <a href="https://open.spotify.com/user/31754egwe3k2mccsvpxbq7pgjnby" target="_blank" class="nav-icon" style="color: #1DB954;"><i class="fab fa-spotify"></i></a>
+                    <a href="https://www.roblox.com/pt/users/789564/profile" target="_blank" class="nav-icon roblox-icon" style="color: #ffffff;">
+                        <svg viewBox="0 0 448 512" width="20"><path fill="currentColor" d="M98.8 0L0 412.3 349.2 512 448 99.7 98.8 0zM261 324.4l-113.8-32.4L179.6 178l113.8 32.4-32.4 114z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card floating">
+            <div class="player-inner">
+                <div class="track-info-row">
+                    <img src="https://i.pinimg.com/736x/f3/e9/22/f3e92278d47bb8d676e0f88dd5c00cc0.jpg" class="track-art" id="track-art">
+                    <h1 class="track-main-title" id="track-title">Search for Happiness</h1>
+                </div>
+
+                <div class="seek-bar">
+                    <span class="timer" id="current-time">0:00</span>
+                    <input type="range" id="progress-bar" value="0" step="1" class="slider">
+                    <span class="timer" id="total-duration">3:46</span>
+                </div>
+
+                <div class="playback-btns">
+                    <i class="fas fa-random"></i>
+                    <i class="fas fa-step-backward" id="prev-btn"></i>
+                    <button id="play-pause" class="btn-play">PLAY</button>
+                    <i class="fas fa-step-forward" id="next-btn"></i>
+                    <i class="fas fa-redo" id="reset-music"></i>
+                </div>
+
+                <div class="banner-container">
+                    <img src="https://i.pinimg.com/736x/dc/66/43/dc6643c730915eb39359fbcceec84a05.jpg" class="banner-img">
+                </div>
+            </div>
+            <audio id="main-audio" src="https://www.bensound.com/bensound-music/bensound-searchforhappiness.mp3" preload="metadata"></audio>
+        </div>
     </div>
-  </div>
 
-  <div class="card floating">
-    <div class="player-inner">
-      <div class="track-info-row">
-        <img src="https://i.pinimg.com/736x/f3/e9/22/f3e92278d47bb8d676e0f88dd5c00cc0.jpg" class="track-art" id="track-art">
-        <h1 class="track-main-title" id="track-title">Search for Happiness</h1>
-      </div>
-
-      <div class="seek-bar">
-        <span class="timer" id="current-time">0:00</span>
-        <input type="range" id="progress-bar" value="0" step="1" class="slider">
-        <span class="timer" id="total-duration">3:46</span>
-      </div>
-
-      <div class="playback-btns">
-        <i class="fas fa-random"></i>
-        <i class="fas fa-step-backward" id="prev-btn"></i>
-        <button id="play-pause" class="btn-play">PLAY</button>
-        <i class="fas fa-step-forward" id="next-btn"></i>
-        <i class="fas fa-redo" id="reset-music"></i>
-      </div>
-
-      <div class="banner-container">
-        <img src="https://i.pinimg.com/736x/dc/66/43/dc6643c730915eb39359fbcceec84a05.jpg" class="banner-img">
-      </div>
+    <div id="copy-notification" class="alert-box">
+        <div class="check-circle"><i class="fas fa-check"></i></div>
+        <span>Copiado: <span class="neon-text">nulls7993</span></span>
     </div>
-    <audio id="main-audio" src="https://www.bensound.com/bensound-music/bensound-searchforhappiness.mp3" preload="metadata"></audio>
-  </div>
-</div>
 
-<div id="copy-notification" class="alert-box">
-  <div class="check-circle"><i class="fas fa-check"></i></div>
-  <span>Copiado: <span class="neon-text">nulls7993</span></span>
-</div>
-
-<div class="footer-container">
-  <div>Views: <span id="count">111</span></div>
-  <div>Developed by NullS7993</div>
+    <div class="footer-container">
+        <div>Views: <span id="count">111</span></div>
+        <div>Developed by NullS7993</div>
+    </div>
 </div>
 
 <script>
+// LÓGICA DA TELA DE ENTRADA
+function startSite() {
+  document.getElementById('entry-overlay').style.opacity = '0';
+  setTimeout(() => {
+    document.getElementById('entry-overlay').style.display = 'none';
+    document.getElementById('main-wrapper').classList.remove('content-blur');
+    // Inicia a música automaticamente ao clicar
+    const audio = document.getElementById('main-audio');
+    audio.play();
+    document.getElementById('play-pause').innerText = 'PAUSE';
+  }, 800);
+}
+
 // Rastro do mouse
 const dots = []; const mouse = { x: 0, y: 0 };
 for (let i = 0; i < 6; i++) {
@@ -231,10 +264,10 @@ document.getElementById('discordBtn').onclick = () => {
   setTimeout(() => alert.classList.remove('show'), 2000);
 };
 
-// Evento que identifica quando a música termina e REINICIA (LOOP)
-audio.addEventListener('ended', () => {
-    audio.currentTime = 0; 
-    audio.play();
+const mainAudio = document.getElementById('main-audio');
+mainAudio.addEventListener('ended', () => {
+    mainAudio.currentTime = 0;
+    mainAudio.play();
 });
 </script>
 
